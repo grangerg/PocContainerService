@@ -1,63 +1,80 @@
-###############################################################################
-# Set default behavior to automatically normalize line endings.
-###############################################################################
-* text=auto
-
-###############################################################################
-# Set default behavior for command prompt diff.
+﻿################################################################################
+# .gitattributes - Settings for the repository. 
 #
-# This is need for earlier builds of msysgit that does not have it on by
-# default for csharp files.
-# Note: This is only used by command line
-###############################################################################
-#*.cs     diff=csharp
-
-###############################################################################
-# Set the merge driver for project and solution files
+# Read the docs: almost every blog post is wrong (or out of date, at best).
+#		https://git-scm.com/docs/gitattributes
 #
-# Merging from the command prompt will add diff markers to the files if there
-# are conflicts (Merging from VS is not affected by the settings below, in VS
-# the diff markers are never inserted). Diff markers may cause the following 
-# file extensions to fail to load in VS. An alternative would be to treat
-# these files as binary and thus will always conflict and require user
-# intervention with every merge. To do so, just uncomment the entries below
-###############################################################################
-#*.sln       merge=binary
-#*.csproj    merge=binary
-#*.vbproj    merge=binary
-#*.vcxproj   merge=binary
-#*.vcproj    merge=binary
-#*.dbproj    merge=binary
-#*.fsproj    merge=binary
-#*.lsproj    merge=binary
-#*.wixproj   merge=binary
-#*.modelproj merge=binary
-#*.sqlproj   merge=binary
-#*.wwaproj   merge=binary
-
-###############################################################################
-# behavior for image files
+#	The most important thing wanted is for Git to leave our files alone; NO normalization. What we checkin is what we checkin.
 #
-# image files are treated as binary by default.
-###############################################################################
-#*.jpg   binary
-#*.png   binary
-#*.gif   binary
+#	text
+#		Only controls line-ending normalization during checkin/checkout. It does NOT mean "this is (not) a text file".
+#	working-tree-encoding
+#		This attribute isn't important long as UTF-8 or cp1252 is used.
+#		But say you used UTF-16BE/LE, then Git would treat the files as binary. (But if you diff with BeyondCompare or VisualStudio it wouldn't matter; BC is the best to use.)
+#	diff
+#		Controls how Git generates diffs for changes; independent of the "text" attribute.
+#		Set it to make diffs behave as text; unset to make Git treat it as a binary file (or do a binary patch if that is enabled).
+#		Set it to an external diff driver to change how diffs are done (command line).
+#	merge
+#		This controls when Git is told to attempt a 3-way-merge. When using external diff'ing tools, this is irrelevant.
+#	binary
+#		This is actually a built-in macro, defined as "-diff -merge -text"
+################################################################################
 
-###############################################################################
-# diff behavior for common document formats
-# 
-# Convert binary document formats to text before diffing them. This feature
-# is only available from the command line. Turn it on by uncommenting the 
-# entries below.
-###############################################################################
-#*.doc   diff=astextplain
-#*.DOC   diff=astextplain
-#*.docx  diff=astextplain
-#*.DOCX  diff=astextplain
-#*.dot   diff=astextplain
-#*.DOT   diff=astextplain
-#*.pdf   diff=astextplain
-#*.PDF   diff=astextplain
-#*.rtf   diff=astextplain
-#*.RTF   diff=astextplain
+# Globally unset "text" attribute, meaning: Do NOT do any line-ending normalization during checkin/checkout (IOW: "Hey, Git! Never edit my files!")
+# Equivalent to someone locally setting:   git config --global core.autocrlf false
+* -text
+
+
+
+################################################################################
+#
+# Git should auto-detect most everything when it comes to tracking changes (binary vs text), but you can be explicit here if you want.
+#	E.g. if there are files that have NUL/"binary only" characters, but should be treated as text
+#	, or messy text-based files (e.g. Postscript (*.ps) or Svg) where you really can't diff.
+#
+################################################################################
+
+#
+# Text
+#
+# These all should be auto-detected in this manner, but are here as examples.
+*.cs     diff=csharp
+*.htm    diff=html
+*.html   diff=html
+*.css    diff=css
+*.csv    diff
+*.xml    diff
+*.ps1    diff
+*.sql    diff
+*.qvs    diff
+*.json   diff
+*.config diff
+
+
+
+
+
+#
+# Binary 
+#
+*.ps   binary
+*.svg  binary
+
+# These all should be auto-detected in this manner, but are here as examples.
+*.exe  binary
+*.dll  binary
+*.pdb  binary
+*.pdf  binary
+*.zip  binary
+*.7z   binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.tif  binary
+*.tiff binary
+*.ico  binary
+ 
+
+

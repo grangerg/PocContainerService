@@ -1,0 +1,329 @@
+#
+# https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md 
+# http://EditorConfig.org
+#
+# This file is the top-most EditorConfig file (VS2019 doesn't currently support more than one editorconfig file anyhow)
+root = true
+
+
+###################################################################################################
+#
+# All Files
+#
+###################################################################################################
+[*]
+charset = utf-8
+end_of_line = crlf
+indent_style = tab
+indent_size = 4
+
+
+###################################################################################################
+# C# files (and might as well target the CSharp-Script and C#-Make files)
+###################################################################################################
+[*.{cs,csx,cake}]
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+
+#
+# Dotnet Code Style Settings
+#	See https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
+#	See http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers
+#
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#sort-system-directives-first
+dotnet_sort_system_directives_first = false
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#coalescing-expressions-in-null-checking-ide0029
+dotnet_style_coalesce_expression = true:warning
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#collection-initializers-ide0028
+dotnet_style_collection_initializer = true:warning
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#explicit-tuple-names-ide0033
+dotnet_style_explicit_tuple_names = true:error
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#null-propagation-in-null-checking-ide0031
+dotnet_style_null_propagation = true:warning
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#object-initializers-ide0017
+dotnet_style_object_initializer = true:warning
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-locals-parameters-and-members-ide0012ide0014
+dotnet_style_predefined_type_for_locals_parameters_members = true:error
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#member-access-expressions-ide0013ide0015
+dotnet_style_predefined_type_for_member_access = true:error
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#events-ide0003ide0009-
+dotnet_style_qualification_for_event = false:error
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#fields-ide0003ide0009
+dotnet_style_qualification_for_field = false:error
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#methods-ide0003ide0009-
+dotnet_style_qualification_for_method = false:error
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#properties-ide0003ide0009-
+dotnet_style_qualification_for_property = false:error
+
+
+
+
+#
+# C# Code Style Settings
+#	The Language *_style_* settings support the "{option}:{severity}" syntax.
+#	See https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
+#	See http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers
+#
+# Indentation Options
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_indent_block_contents
+csharp_indent_block_contents = true
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_indent_braces
+csharp_indent_braces = false
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-indent-switch-case-contents-
+csharp_indent_case_contents = true
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#label-positioning
+csharp_indent_labels = no_change
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-indent-switch-labels-
+csharp_indent_switch_labels = true
+
+# Style Options
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#prefer-conditional-delegate-calls-ide0041
+csharp_style_conditional_delegate_call = true:warning
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#accessors-ide0027
+csharp_style_expression_bodied_accessors = true:suggestion
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#constructors-ide0021
+csharp_style_expression_bodied_constructors = true:silent
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#indexers-ide0026
+csharp_style_expression_bodied_indexers = true:suggestion
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#methods-ide0022
+csharp_style_expression_bodied_methods = true:silent
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#operators-ide0023-ide0024
+csharp_style_expression_bodied_operators = true:suggestion
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#properties-ide0025
+csharp_style_expression_bodied_properties = true:suggestion
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#inlined-variable-declarations-ide0018
+csharp_style_inlined_variable_declaration = true:suggestion
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#as-with-null-checking-ide0019
+csharp_style_pattern_matching_over_as_with_null_check = true:suggestion
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#is-with-cast-checking-ide0020
+csharp_style_pattern_matching_over_is_with_cast_check = true:suggestion
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#throw-expressions-ide0016
+csharp_style_throw_expression = true:suggestion
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#var-elsewhere-ide0007-ide0008-
+csharp_style_var_elsewhere = false:silent
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#var-for-built-in-types-ide0007-ide0008
+csharp_style_var_for_built_in_types = false:silent
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#var-when-type-is-apparent-ide0007-ide0008
+csharp_style_var_when_type_is_apparent = false:silent
+
+# New Line Options
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-newline-before-catch
+csharp_new_line_before_catch = true
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-newline-before-else
+csharp_new_line_before_else = true
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-newline-before-finally
+csharp_new_line_before_finally = true
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-newline-before-members-in-anonymous-types
+csharp_new_line_before_members_in_anonymous_types = true
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-newline-before-members-in-object-initializers
+csharp_new_line_before_members_in_object_initializers = true
+
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-newline-before-open-brace-
+csharp_new_line_before_open_brace = all
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-newline-before-members-in-query-expression-clauses
+csharp_new_line_between_query_expression_clauses = true
+
+# Spacing Options
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-space-after-cast-
+csharp_space_after_cast = false
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_after_colon_in_inheritance_clause
+csharp_space_after_colon_in_inheritance_clause = true
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_after_comma
+csharp_space_after_comma = true
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_after_dot
+csharp_space_after_dot = false
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-space-after-keywords-in-control-flow-statements-
+csharp_space_after_keywords_in_control_flow_statements = true
+# http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_after_semicolon_in_for_statement
+csharp_space_after_semicolon_in_for_statement = true
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_around_binary_operators 
+csharp_space_around_binary_operators = before_and_after
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_around_declaration_statements
+csharp_space_around_declaration_statements = do_not_ignore
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_before_colon_in_inheritance_clause
+csharp_space_before_colon_in_inheritance_clause = true
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_before_comma
+csharp_space_before_comma = false
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_before_dot
+csharp_space_before_dot = false
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_before_semicolon_in_for_statement
+csharp_space_before_semicolon_in_for_statement = false
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_before_open_square_brackets
+csharp_space_before_open_square_brackets = false
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_between_empty_square_brackets
+csharp_space_between_empty_square_brackets = false
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_between_method_declaration_name_and_open_parenthesis
+csharp_space_between_method_declaration_name_and_open_parenthesis = false
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-space-between-method-declaration-argument-list-parentheses-
+csharp_space_between_method_declaration_parameter_list_parentheses = false
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_between_method_declaration_empty_parameter_list_parentheses
+csharp_space_between_method_declaration_empty_parameter_list_parentheses = false
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_between_method_call_name_and_opening_parenthesis
+csharp_space_between_method_call_name_and_opening_parenthesis = false
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-space-within-parentheses-for-method-call-argument-list
+csharp_space_between_method_call_parameter_list_parentheses = false
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_between_method_call_empty_parameter_list_parentheses
+csharp_space_between_method_call_empty_parameter_list_parentheses = false
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#-space-within-parentheses-for-other-options-
+csharp_space_between_parentheses = false
+## http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers#csharp_space_between_square_brackets
+csharp_space_between_square_brackets = false
+
+# Wrapping Options
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#leave-block-on-single-line
+csharp_preserve_single_line_blocks = true
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#leave-statements-and-member-declarations-on-the-same-line
+csharp_preserve_single_line_statements = false
+
+# Preferences; these support the "{option}:{severity}" syntax.
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#expression-level-preferences-1
+csharp_prefer_simple_default_expression = true:suggestion
+## https://github.com/MicrosoftDocs/visualstudio-docs/blob/master/docs/ide/editorconfig-code-style-settings-reference.md#code-block-preferences
+csharp_prefer_braces = false:suggestion
+
+
+
+
+
+#
+# C# naming conventions
+#	See https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
+#	See http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers
+#
+#
+# Define symbols
+#
+# Interfaces
+dotnet_naming_symbols.InterfaceSymbol.applicable_kinds = interface
+# Parameters 
+dotnet_naming_symbols.ParameterSymbol.applicable_kinds = parameter
+# All Types (2017-09: github doesn't list "parameter" as an option, but kent-boogaart does; they also disagree on whether you can just use "*")
+dotnet_naming_symbols.AllTypesSymbol.applicable_kinds = class, struct, interface, enum, property, method, field, event, delegate, parameter
+# Private variables
+dotnet_naming_symbols.PrivateVariableSymbol.applicable_kinds = field, property
+dotnet_naming_symbols.PrivateVariableSymbol.applicable_accessibilities = private
+
+
+#
+# Naming Styles
+#
+# Basic style to enforce pascal case
+dotnet_naming_style.PascalCaseStyle.capitalization = pascal_case
+# Control styling for parameters
+dotnet_naming_style.ParameterStyle.capitalization = camel_case
+# Control styling for private variables
+dotnet_naming_style.PrivateVariableStyle.capitalization = camel_case
+dotnet_naming_style.PrivateVariableStyle.required_prefix = _
+# Control styling for interfaces 
+dotnet_naming_style.InterfaceStyle.capitalization = pascal_case
+dotnet_naming_style.InterfaceStyle.required_prefix = I
+
+
+#
+# Naming Rules
+#	List rules from most-specific to least-specific (since the first matching rule is the only one applied).
+#	Rule names are indicate the underlying rules in case they are the only clue someone has to why they're triggering an error.
+#
+dotnet_naming_rule.InterfacesMustBeginWithTheLetterIAndBePascalCase.severity = error
+dotnet_naming_rule.InterfacesMustBeginWithTheLetterIAndBePascalCase.symbols = InterfaceSymbol
+dotnet_naming_rule.InterfacesMustBeginWithTheLetterIAndBePascalCase.style = InterfaceStyle
+dotnet_naming_rule.PrivateVariablesMustBeginWithUnderscoreAndBeCamelCase.severity = error
+dotnet_naming_rule.PrivateVariablesMustBeginWithUnderscoreAndBeCamelCase.symbols = PrivateVariableSymbol
+dotnet_naming_rule.PrivateVariablesMustBeginWithUnderscoreAndBeCamelCase.style = PrivateVariableStyle
+dotnet_naming_rule.ParametersMustBeCamelCase.severity = error
+dotnet_naming_rule.ParametersMustBeCamelCase.symbols = ParameterSymbol
+dotnet_naming_rule.ParametersMustBeCamelCase.style = ParameterStyle
+dotnet_naming_rule.DefaultAllTypeNamesMustBePascalCase.severity = error
+dotnet_naming_rule.DefaultAllTypeNamesMustBePascalCase.symbols = AllTypesSymbol
+dotnet_naming_rule.DefaultAllTypeNamesMustBePascalCase.style = PascalCaseStyle
+
+
+
+
+
+
+###################################################################################################
+#
+# Roslyn Code Analyzers
+#	https://docs.microsoft.com/en-us/visualstudio/code-quality/use-roslyn-analyzers?view=vs-2019 
+#
+#	The VS UI appends these to the end of this file when you right-click on a warning in the "Error List" window pane and choose to "Set Severity" on an item.
+#
+###################################################################################################
+
+# JUSTIFICATION: Don't waste RAM; clean up after yourself.
+# CA2000: Dispose objects before losing scope
+dotnet_diagnostic.CA2000.severity = warning
+
+# JUSTIFICATION: If you don't use a variable for the Message of an Exception object, you get this warning (because its params are decorated with that magic attribute). Errors are never localized; far too little ROI.
+# CA1303: Do not pass literals as localized parameters
+dotnet_diagnostic.CA1303.severity = none
+
+# JUSTIFICATION: ConfigureAwait(false) is unnecessary beginning in .NetCore ( https://blog.stephencleary.com/2017/03/aspnetcore-synchronization-context.html )
+# CA2007: Consider calling ConfigureAwait on the awaited task
+dotnet_diagnostic.CA2007.severity = none
+
+# JUSTIFICATION: It's EXPECTED that the default overload for methods like string.Contains() to use case-sensitive, invariant-culture comparisons.
+# CA1307: Specify StringComparison (.Contains())
+dotnet_diagnostic.CA1307.severity = none
+
+# JUSTIFICATION: Backend projects never change their process/thread locale/culture. Web stuff handles this differently, which makes this warning useless.
+# CA1305: Specify IFormatProvider (.ToString(), string.Format(), Convert.ToByte(), etc.)
+dotnet_diagnostic.CA1305.severity = none
+
+# JUSTIFICATION: Custom exceptions usually need custom constructors; "standard" constructors are not always a good idea.
+# CA1032: Implement standard exception constructors
+dotnet_diagnostic.CA1032.severity = none
+
+# JUSTIFICATION: Backend projects never change their process/thread locale/culture. Web stuff handles this differently, which makes this warning useless.
+# CA1304: Specify CultureInfo (string.ToLower())
+dotnet_diagnostic.CA1304.severity = none
+
+# JUSTIFICATION: It's not important to switch to static methods just because it's not *presently* accessing member data.
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = none
+
+# JUSTIFICATION: We catch and handle whatever errors we need to catch; avoiding the handling/catching of an exception because it's "too general" is a stupid warning.
+# CA1031: Do not catch general exception types
+dotnet_diagnostic.CA1031.severity = none
+
+# JUSTIFICATION: It's common to use strings that are sometimes fragments, sometimes valid Url/Uri data.
+# CA1054: Uri parameters should not be strings
+dotnet_diagnostic.CA1054.severity = none
+
+# JUSTIFICATION: It's common to use strings that are sometimes fragments, sometimes valid Url/Uri data.
+# CA1055: Uri return values should not be strings
+dotnet_diagnostic.CA1055.severity = none
+
+# JUSTIFICATION:It's common to use strings that are sometimes fragments, sometimes valid Url/Uri data.
+# CA1056: Uri properties should not be strings
+dotnet_diagnostic.CA1056.severity = none
+
+# JUSTIFICATION: It's a property; there's nothing special about a collection vs some other object. If we don't want a setter, we remove it; which is certainly smarter than removing the setter and adding a custom method to set the property---all just to avoid this stupid warning.
+# CA2227: Collection properties should be read only
+dotnet_diagnostic.CA2227.severity = none
+
+# JUSTIFICATION: The initializer syntax doesn't support everything.
+# CA1810: Initialize static properties instead of using a static constructor.
+dotnet_diagnostic.CA1810.severity = none
+
+# JUSTIFICATION: We intentionally don't add/specify the default modifier (private/internal).
+# IDE0040: Add accessibility modifiers
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:none
+
+# JUSTIFICATION: We're not using other languages besides C#.
+# CA1716: Identifiers should not match keywords
+dotnet_diagnostic.CA1716.severity = none
+
+# JUSTIFICATION: This happens in auto-generated (e.g. EFC) classes, as well as any classes that base their names off of them.
+# CA1720: Identifier contains type name
+dotnet_diagnostic.CA1720.severity = none
+
+# JUSTIFICATION: This happens in auto-generated (e.g. EFC) classes, as well as any classes that directly pass data from them.
+# CA1819: Properties should not return arrays
+dotnet_diagnostic.CA1819.severity = none
+
+# JUSTIFICATION: We don't have control over external libraries that may or may not be included in various projects.
+# CA1724: Type names should not match namespaces
+dotnet_diagnostic.CA1724.severity = none
