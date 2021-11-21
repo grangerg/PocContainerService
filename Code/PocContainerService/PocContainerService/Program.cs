@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -29,17 +30,12 @@ static partial class Program
 			standardOptions.Converters.Add(new JsonStringEnumConverter()); // (de)serialize enum-members as strings, not numbers; preserve C# casing.
 		});
 
-
-		//		Yeah, yeah. I did it "long-hand" so I didn't have unused usings when I commented the below block out. :)
-		//		diSvcs.AddHostedService<BackgroundService>(); is a MUCH shorter equivalent.
-		//
-		//builder.Host
-		//	.ConfigureServices((ctx, diSvcs) =>
-		//	{
-		//		// E.g.; this doesn't actually work; need a "real" BackgroundService class...
-		//		diSvcs.Add(new(typeof(Microsoft.Extensions.Hosting.IHostedService), typeof(Microsoft.Extensions.Hosting.BackgroundService), Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)); 
-		//	});
-
+		builder.Host.ConfigureServices((ctx, diSvcs) =>
+		{
+			// Instead of AddHostedService, because we want the service to also be injectable as itself, for our mapped handlers.
+			diSvcs.AddSingleton<FibonacciService>();
+			diSvcs.AddSingleton<IHostedService>(sp => sp.GetRequiredService<FibonacciService>());
+		});
 
 		WebApplication app = builder.Build();
 		// 
