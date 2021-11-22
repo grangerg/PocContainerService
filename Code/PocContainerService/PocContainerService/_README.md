@@ -24,7 +24,7 @@ Technically, it's just a command that's executed from within the container that 
 
 As the **HEALTHCHECK** docs indicate, when the container starts up, the container will be reported as "starting" until the health check succeeds for the first time. Thereafter, if the health check either fails or takes too long to complete, it is switched to "unhealthy". Whenever a health check succeeds, the container is switched to "healthy". 
 
-In the simplest of cases, for this POC, we just need to have an endpoint that returns a blank page, so we can support the most common [example command with the default port](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-6.0#docker-example):  `curl -f http://localhost:5000/ || exit 1`
+In the simplest of cases, for this POC, we just need to have an endpoint that returns a blank page, so we can support the most common [example command with the default port](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-6.0#docker-example):  `curl -f -s http://localhost:5000/ || exit 1`
 
 Or we could use this if we want to use [wget instead](https://stackoverflow.com/a/47722899/530545):  `wget --quiet --tries=1 --spider http://localhost:5000/ || exit 1`
 
