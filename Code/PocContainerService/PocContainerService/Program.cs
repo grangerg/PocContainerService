@@ -14,7 +14,7 @@ static partial class Program
 	public static async Task Main(string[] args)
 	{
 		WebApplicationBuilder builder;
-		builder = WebApplication.CreateBuilder(args);
+		builder = WebApplication.CreateBuilder(args); // https://github.com/dotnet/aspnetcore/blob/main/src/DefaultBuilder/src/WebApplicationBuilder.cs
 		builder.Services.Configure<JsonOptions>(options =>
 		{
 			// It's irritating that you can't REPLACE the object with one you constructed elsewhere (makes it hard to be DRY in larger projects).
