@@ -97,7 +97,12 @@ static partial class Program
 
     static IResult Info([FromServices] FibonacciService svc)
     {
-        return Results.Ok(new { FibonnaciNumber = svc.FibonacciNumber, Paused = svc.Paused }); // emit Json info about the work being performed
+        return Results.Ok(new
+		{
+			FibonnaciNumber = svc.FibonacciNumber
+			, Previous = svc.PrevNumber
+			, Paused = svc.Paused
+		}); // emit Json info about the work being performed
 	}
 
 

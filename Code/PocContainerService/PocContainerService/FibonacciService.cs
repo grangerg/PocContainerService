@@ -13,8 +13,9 @@ public class FibonacciService : BackgroundService
 	readonly IConfigurationSection _appSettings;
 
 	public bool Paused { get; private set; }
-	public long FibonacciNumber { get; private set; }
-	long _num1, _num2;
+	public ulong FibonacciNumber { get; private set; }
+	public ulong PrevNumber { get; private set; }
+
 
 	public FibonacciService(ILogger<FibonacciService> logger, IHostApplicationLifetime appLifetime, IConfiguration appConfig)
 	{
@@ -22,8 +23,8 @@ public class FibonacciService : BackgroundService
 		_appLifetime = appLifetime;
 		_appSettings = appConfig.GetSection("AppSettings");
 
-		_num1 = _num2 = 1;
-		FibonacciNumber = 0;
+		PrevNumber = 0;
+		FibonacciNumber = 1;
 	}
 
 
@@ -36,17 +37,17 @@ public class FibonacciService : BackgroundService
 			{
 				try
 				{
-					FibonacciNumber = _num1 + _num2;
+					ulong _tmp = FibonacciNumber;
+					FibonacciNumber = checked(FibonacciNumber + PrevNumber); // we want OverflowException instead of the default bit-truncation behavior.
+					PrevNumber = _tmp;
+					_logger.LogInformation($"New Fibonacci number: {FibonacciNumber:N0}; Old number: {PrevNumber:N0}");
 				}
-				catch
+				catch (System.OverflowException)
 				{
-					_logger.LogInformation("Fibonacci number too large. Starting over.");
-					_num1 = _num2 = 1;
-					FibonacciNumber = _num1 + _num2;
+					_logger.LogInformation("Fibonacci number too large for a ulong. Starting over.");
+					PrevNumber = 0;
+					FibonacciNumber = 1;
 				}
-				_num2 = _num1;
-				_num1 = FibonacciNumber;
-				_logger.LogInformation($"New Fibonacci number: {FibonacciNumber:N0}");
 			}
 			
 			await Task.Delay(_appSettings.GetValue("DelayMs", defaultDelayMs), stoppingToken);
