@@ -20,11 +20,11 @@
 
 	.PARAMETER SelfContained
 	This controls whether the .Net runtime will be packaged into the final executable. All other "single-executable" option are used/on, regardless this setting. 
-	True - The runtime is packaged into the final executable.
+	True/Present - The runtime is packaged into the final executable.
 	False - The .Net runtime must be made available where the executable is ultimately published or it will not be able to run.
 
 	.PARAMETER Clean
-	Set to true to "dotnet clean" before doing the build.
+	Specify this switch to do a "dotnet clean" before doing the build.
 	This isn't helpful in automated builds where there isn't any build-intermediates lying around that could affect the build.
 	(I.e. If there are no "bin" or "obj" folders, the "clean" will report a failure, which is just useless noise.)
 
@@ -36,8 +36,8 @@
 param(
 	[string]$RuntimeId = "win10-x64" 
 	, [string]$FrameworkId = "net6.0"
-	, [bool]$SelfContained = $false 
-	, [bool]$Clean = $false
+	, [switch]$SelfContained 
+	, [switch]$Clean
 	, [string]$CopyOutputToPath = ""
 )
 
