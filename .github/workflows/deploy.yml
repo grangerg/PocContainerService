@@ -3,8 +3,10 @@ name: Deploy
 on:
   push:
     branches: [ prod ]
+    paths: [ Code/PocContainerService/** ]
   pull_request:
     branches: [ prod ]
+    paths: [ Code/PocContainerService/** ]
   workflow_dispatch:
 
 jobs:
@@ -21,11 +23,11 @@ jobs:
         dotnet-version: 6.x
     - name: Build and Deploy
       # The ubuntu image already has PS 7.x
-      run: pwsh Code/PocContainerService/_deploy.ps1
+      run: pwsh Code/PocContainerService/_deploy.ps1 -RuntimeId linux-musl-x64 -SelfContained
     - name: Save artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: poc-artifact
+        name: PocContainerService
         path: Code/PocContainerService/BuildArtifacts/
-        retention-days: 15 # 2 weeks is more than enough for this
+        retention-days: 4 # don't need these lying around; just a POC.
         
