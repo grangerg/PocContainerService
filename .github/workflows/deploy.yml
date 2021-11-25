@@ -15,19 +15,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout triggering commit
-      uses: actions/checkout@v2  # https://github.com/actions/checkout
-    - name: Assure .Net
-      uses: actions/setup-dotnet@v1  # https://github.com/actions/setup-dotnet
-      with:
-        dotnet-version: 6.x
-    - name: Build and Deploy
-      # The ubuntu image already has PS 7.x
-      run: pwsh Code/PocContainerService/_deploy.ps1 -RuntimeId linux-musl-x64 -SelfContained
-    - name: Save artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: PocContainerService
-        path: Code/PocContainerService/BuildArtifacts/
-        retention-days: 4 # don't need these lying around; just a POC.
-        
+      - name: Checkout triggering commit
+        uses: actions/checkout@v2  # https://github.com/actions/checkout
+
+      - name: Assure .Net
+        uses: actions/setup-dotnet@v1  # https://github.com/actions/setup-dotnet
+        with:
+          dotnet-version: 6.x
+
+      - name: Build and Deploy
+        # The ubuntu image already has PS 7.x
+        run: pwsh Code/PocContainerService/_deploy.ps1 -RuntimeId linux-musl-x64 -SelfContained
+
+      - name: Save build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: PocContainerService
+          path: Code/PocContainerService/BuildArtifacts/
+          retention-days: 4 # don't need these lying around; just a POC.
+
+      - name: Build docker image
+        run: docker build -t gg-poc-cs -f Code/PocContainerService/PocContainerService.dockerfile Code/PocContainerService/BuildArtifacts
+
+      - name: Extract docker artifact
+        run: docker save gg-poc-cs --output PocContainerService.img.tar
+
+      - name: Save docker image artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: DockerImage
+          path: PocContainerService.img.tar
+          retention-days: 4 # don't need these lying around; just a POC.
