@@ -1,0 +1,31 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ prod ]
+  pull_request:
+    branches: [ prod ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout triggering commit
+      uses: actions/checkout@v2  # https://github.com/actions/checkout
+    - name: Assure .Net
+      uses: actions/setup-dotnet@v1  # https://github.com/actions/setup-dotnet
+      with:
+        dotnet-version: 6.x
+    - name: Build and Deploy
+      # The ubuntu image already has PS 7.x
+      run: pwsh Code/PocContainerService/_deploy.ps1
+    - name: Save artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: poc-artifact
+        path: Code/PocContainerService/BuildArtifacts/
+        retention-days: 15 # 2 weeks is more than enough for this
+        
