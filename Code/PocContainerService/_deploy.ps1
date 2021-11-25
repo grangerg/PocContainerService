@@ -54,10 +54,10 @@ Write-Output "SelfContained: $SelfContained";
 Write-Output "OutputDir: $_OutputDir";
 
 if (Test-Path -Path $_OutputDir) {
-	Write-Output "Cleaning output directory ...";
+	Write-Output "Cleaning output directory '$_OutputDir' ...";
 	Remove-Item ([IO.Path]::Combine($_OutputDir, "*")) -Recurse -Force;
 } else {
-	Write-Output "Creating output directory ...";
+	Write-Output "Creating output directory '$_OutputDir' ...";
 	New-Item -Type Directory -Force -Path $_OutputDir;
 }
 Write-Output "";
@@ -85,7 +85,7 @@ Write-Output "Publishing '$_ProjectFile' in RELEASE mode ...";
 Start-Process -FilePath "dotnet" -Wait -NoNewWindow -ArgumentList @(
 	, "publish" # https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish
 	, "`"$_ProjectFile`""
-	, "--output `"$_OutputDir `"" # the space after the var is necessary, or MSbuild barfs
+	, "--output `"$_OutputDir`"" 
 	, "--configuration Release"
 	, "--framework `"$FrameworkId`"" 
 	, "--runtime `"$RuntimeId`"" # (instead of "-a" or "-os") In .Net 6, it's a warning to not also indicate "(not) self-contained".
