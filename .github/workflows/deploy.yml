@@ -39,7 +39,7 @@ jobs:
           retention-days: 4 # don't need these lying around; just a POC.
 
       - name: Build docker image
-        run: docker build -t gg-poc-cs -f $YML_SLN_PATH/PocContainerService.dockerfile $YML_SLN_PATH/BuildArtifacts
+        run: docker build -t gg-poc-cs:$GITHUB_RUN_NUMBER -f $YML_SLN_PATH/PocContainerService.dockerfile $YML_SLN_PATH/BuildArtifacts
 
       - name: Extract docker artifact
         run: docker save gg-poc-cs --output $YML_IMG_NAME
@@ -50,3 +50,4 @@ jobs:
           name: DockerImage
           path: ${{ env.YML_IMG_NAME }}
           retention-days: 4 # don't need these lying around; just a POC.
+
