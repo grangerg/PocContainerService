@@ -1,0 +1,39 @@
+# This originally started with GitLab's "Getting Started" template, but it's significantly different now.
+# It technically works and does the equivalent of what the (GitHub) deploy.yml file does.
+# However, there's something significantly different, because the final container image (.tar) is ~215MiB; the GitHub-generated image was ~57MiB.
+
+stages:          # List of stages for jobs, and their order of execution
+  - build_app
+  - build_img
+
+build-app-job: 
+  stage: build_app
+  image: mcr.microsoft.com/dotnet/sdk:6.0
+  only: [ prod ]
+  script:
+    - pwsh Code/PocContainerService/_deploy.ps1 -RuntimeId linux-musl-x64 -SelfContained
+  artifacts:
+    name: PocContainerService
+    paths: [ Code/PocContainerService/BuildArtifacts/ ]
+    expire_in: 2 days
+
+# Help from https://pythonspeed.com/articles/gitlab-build-docker-image/
+# And from https://www.docker.com/blog/multi-arch-build-what-about-gitlab-ci/
+build-img-job:      
+  stage: build_img 
+  image: docker:stable
+  only: [ prod ]
+  dependencies:
+    - build-app-job # just being explicit; not necessary for the present set of stages and jobs.
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+  services:
+    - docker:dind
+  script:
+    - docker build -t gg-poc-cs -f Code/PocContainerService/PocContainerService.dockerfile Code/PocContainerService/BuildArtifacts
+    - docker save gg-poc-cs --output PocContainerService.img.tar 
+  artifacts:
+    name: DockerImage
+    paths: [ PocContainerService.img.tar ]
+    expire_in: 2 days
