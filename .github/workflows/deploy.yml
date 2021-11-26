@@ -9,6 +9,10 @@ on:
     paths: [ Code/PocContainerService/** ]
   workflow_dispatch:
 
+env:
+  YML_SLN_PATH: Code/PocContainerService
+  YML_IMG_NAME: PocContainerService.img.tar
+
 jobs:
   build:
 
@@ -25,24 +29,24 @@ jobs:
 
       - name: Build and Deploy
         # The ubuntu image already has PS 7.x
-        run: pwsh Code/PocContainerService/_deploy.ps1 -RuntimeId linux-musl-x64 -SelfContained
+        run: pwsh $YML_SLN_PATH/_deploy.ps1 -RuntimeId linux-musl-x64 -SelfContained
 
       - name: Save build artifacts
         uses: actions/upload-artifact@v2
         with:
           name: PocContainerService
-          path: Code/PocContainerService/BuildArtifacts/
+          path: ${{ env.YML_SLN_PATH }}/BuildArtifacts/
           retention-days: 4 # don't need these lying around; just a POC.
 
       - name: Build docker image
-        run: docker build -t gg-poc-cs -f Code/PocContainerService/PocContainerService.dockerfile Code/PocContainerService/BuildArtifacts
+        run: docker build -t gg-poc-cs -f $YML_SLN_PATH/PocContainerService.dockerfile $YML_SLN_PATH/BuildArtifacts
 
       - name: Extract docker artifact
-        run: docker save gg-poc-cs --output PocContainerService.img.tar
+        run: docker save gg-poc-cs --output $YML_IMG_NAME
 
       - name: Save docker image artifact
         uses: actions/upload-artifact@v2
         with:
           name: DockerImage
-          path: PocContainerService.img.tar
+          path: ${{ env.YML_IMG_NAME }}
           retention-days: 4 # don't need these lying around; just a POC.
