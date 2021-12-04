@@ -1,5 +1,7 @@
 # Azure pipeline definition
 #
+# Azure and GitLab both produced a ~215MiB working docker image (GitHub's was better: ~130MiB).
+#
 # Basics
 #   https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema
 #   https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?tabs=yaml&view=azure-devops
@@ -51,10 +53,12 @@ jobs:
       vmImage: "ubuntu-latest" 
     steps:
       - checkout: self
-      - download: current
-        artifact: ${{ variables.buildArtifactName }}
-        # not clear if the artifact contains the original paths or the original targetPath is the root of what's preserved (GitHub does the former)
-      - script: docker build -t gg-poc-cs:$(Build.BuildNumber) -f ${{ variables.linuxSlnPath }}/PocContainerService.dockerfile ${{ variables.linuxSlnPath }}/BuildArtifacts
+      - task: DownloadPipelineArtifact@2 # because the "download" shortcut lacks necessary options
+        inputs:
+          source: current
+          artifact: ${{ variables.buildArtifactName }}
+          path: $(Pipeline.Workspace)/${{ variables.buildArtifactName }}
+      - script: docker build -t gg-poc-cs:$(Build.BuildNumber) -f ${{ variables.linuxSlnPath }}/PocContainerService.dockerfile $(Pipeline.Workspace)/${{ variables.buildArtifactName }}
       - script: docker save gg-poc-cs --output ${{ variables.dockerImgName }}
       - task: PublishPipelineArtifact@1 # because the "publish" shortcut is poorly documented
         inputs:

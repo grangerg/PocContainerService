@@ -1,6 +1,8 @@
 # This originally started with GitLab's "Getting Started" template, but it's significantly different now.
 # It technically works and does the equivalent of what the (GitHub) deploy.yml file does.
-# However, there's something significantly different, because the final container image (.tar) is ~215MiB; the GitHub-generated image was ~57MiB.
+#
+# However, there's something significantly different, because the final, working container image (.tar) is ~215MiB
+# The GitHub-generated image was ~130MiB (though Azure DevOps also did ~215MiB).
 
 stages:          # List of stages for jobs, and their order of execution
   - build_app
