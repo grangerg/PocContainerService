@@ -1,0 +1,65 @@
+# Azure pipeline definition
+#
+# Basics
+#   https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema
+#   https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?tabs=yaml&view=azure-devops
+# Azure Pipelines Agents (MS-Hosted)
+#   https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml#software
+#   About their Ubuntu 20.04 vmImage: https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
+#   About their Windows 2019 vmImage: https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md 
+# Artifacts:
+#   https://docs.microsoft.com/en-us/azure/devops/pipelines/artifacts/pipeline-artifacts?view=azure-devops&tabs=yaml
+#   https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/utility/download-pipeline-artifact?view=azure-devops#arguments
+# Variables:
+#   https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch
+#   https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml
+#
+#
+variables:
+  - name: linuxSlnPath
+    value: Code/PocContainerService
+  - name: buildArtifactName
+    value: PocContainerService
+  - name: dockerImgName
+    value: PocContainerService.dimg.tar
+
+trigger:
+    branches:
+      include: [ prod ]
+    paths:
+      include: [ Code/PocContainerService/* ]
+
+jobs:
+  - job: BuildApp
+    pool:
+      vmImage: "windows-2022" # 2021-12-04: only this image has .Net 6.0 preinstalled
+    steps:
+      - checkout: self
+      - task: PowerShell@2 # because the "powershell"/"pwsh" shortcuts don't run script files
+        inputs:
+          filePath: Code\PocContainerService\_deploy.ps1
+          arguments: -RuntimeId linux-musl-x64 -SelfContained
+      - task: PublishPipelineArtifact@1 # because the "publish" shortcut is poorly documented
+        inputs:
+          targetPath: Code\PocContainerService\BuildArtifacts\
+          artifactName: ${{ variables.buildArtifactName }}
+          artifactType: pipeline
+  - job: BuildImg
+    dependsOn:
+      - BuildApp
+    pool: 
+      vmImage: "ubuntu-latest" 
+    steps:
+      - checkout: self
+      - download: current
+        artifact: ${{ variables.buildArtifactName }}
+        # not clear if the artifact contains the original paths or the original targetPath is the root of what's preserved (GitHub does the former)
+      - script: docker build -t gg-poc-cs:$(Build.BuildNumber) -f ${{ variables.linuxSlnPath }}/PocContainerService.dockerfile ${{ variables.linuxSlnPath }}/BuildArtifacts
+      - script: docker save gg-poc-cs --output ${{ variables.dockerImgName }}
+      - task: PublishPipelineArtifact@1 # because the "publish" shortcut is poorly documented
+        inputs:
+          targetPath: ${{ variables.dockerImgName }}
+          artifactName: DockerImage
+          artifactType: pipeline
+
+
